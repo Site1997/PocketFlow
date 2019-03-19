@@ -22,7 +22,7 @@ import tensorflow as tf
 from tensorflow.contrib.quantize.python import common
 from tensorflow.contrib.quantize.python import input_to_ops
 from tensorflow.contrib.quantize.python import quant_ops
-from tensorflow.contrib.lite.python import lite_constants
+# from tensorflow.contrib.lite.python import lite_constants
 
 from utils.misc_utils import auto_barrier
 from utils.misc_utils import is_primary_worker
@@ -129,7 +129,7 @@ def export_tflite_model(input_coll, output_coll, images_shape, images_name):
   tf.logging.info(pb_path + ' -> ' + tflite_path)
   converter = tf.contrib.lite.TFLiteConverter.from_frozen_graph(
     pb_path, [images_name_ph], [node.name.replace(':0', '') for node in net_outputs])
-  converter.inference_type = lite_constants.QUANTIZED_UINT8
+  converter.inference_type = tf.lite.constants.QUANTIZED_UINT8 #lite_constants.QUANTIZED_UINT8
   converter.quantized_input_stats = {images_name_ph: (0., 1.)}
   unquant_node_name = None
   try:
